@@ -1,0 +1,681 @@
+[
+    {
+        "id": "f662edaf.b0242",
+        "type": "tab",
+        "label": "Sungrow Inverter to MQTT",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "edbeb22a.81487",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Output",
+        "topic": "solar/pv_output",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1290,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "f091b7be.8608a8",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "Get Inputs",
+        "func": "\nmsg.payload = {\n    'fc': 4, \n    'unitid': 1, \n    'address': 5000 , \n    'quantity': 100\n}; \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "88d2470a.1f78e8"
+            ]
+        ]
+    },
+    {
+        "id": "fc97d311.11545",
+        "type": "inject",
+        "z": "f662edaf.b0242",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "f091b7be.8608a8"
+            ]
+        ]
+    },
+    {
+        "id": "88d2470a.1f78e8",
+        "type": "modbus-flex-getter",
+        "z": "f662edaf.b0242",
+        "name": "SunGrow Inverter",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "logIOActivities": false,
+        "server": "d8f95e8e.bcebd",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 270,
+        "y": 720,
+        "wires": [
+            [
+                "69888277.3808dc",
+                "348a929c.d1b0ae",
+                "13f71dda.a91342",
+                "3912f83c.700da8",
+                "6d15a660.925618",
+                "f200c99b.36e458",
+                "834c75d4.39c228",
+                "161ebaa0.d48555",
+                "21f81d08.f99f52",
+                "83cddcef.5da02",
+                "e41cc2b1.2f84d",
+                "4b697aa6.7e7b04",
+                "447afd77.2f5ed4",
+                "3920b1c6.a3afde",
+                "4dc0b9.95c7ff48",
+                "514ebda6.f19cc4",
+                "8be5c35d.93b87",
+                "434c05c7.df849c",
+                "5e57df6e.b5cc1"
+            ],
+            [
+                "868a3db9.03c09"
+            ]
+        ]
+    },
+    {
+        "id": "69888277.3808dc",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5016 pv output",
+        "func": "var newMsg = { payload: msg.payload[16] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 780,
+        "y": 420,
+        "wires": [
+            [
+                "edbeb22a.81487"
+            ]
+        ]
+    },
+    {
+        "id": "148e7a37.31c906",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Line Frequency",
+        "topic": "solar/pv_line_frequency",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "348a929c.d1b0ae",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5035 line frequency",
+        "func": "var newMsg = { payload: msg.payload[35]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 480,
+        "wires": [
+            [
+                "148e7a37.31c906"
+            ]
+        ]
+    },
+    {
+        "id": "cba375d7.837768",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Inverter Current",
+        "topic": "solar/pv_inverter_current",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "13f71dda.a91342",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5021 inverter current",
+        "func": "var newMsg = { payload: msg.payload[21]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 540,
+        "wires": [
+            [
+                "cba375d7.837768"
+            ]
+        ]
+    },
+    {
+        "id": "373167df.939688",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Grid Voltage",
+        "topic": "solar/pv_grid_voltage",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1300,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "3912f83c.700da8",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5018 grid voltage",
+        "func": "var newMsg = { payload: msg.payload[18]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 780,
+        "y": 600,
+        "wires": [
+            [
+                "373167df.939688"
+            ]
+        ]
+    },
+    {
+        "id": "7bf8caec.3aab54",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Daily Total",
+        "topic": "solar/pv_daily_total",
+        "qos": "1",
+        "retain": "true",
+        "broker": "3244a68e.56981a",
+        "x": 1300,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "6d15a660.925618",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5002 daily total",
+        "func": "var newMsg = { payload: msg.payload[2]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 780,
+        "y": 660,
+        "wires": [
+            [
+                "7bf8caec.3aab54"
+            ]
+        ]
+    },
+    {
+        "id": "52810289.86499c",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Lifetime Total",
+        "topic": "solar/pv_lifetime_total",
+        "qos": "1",
+        "retain": "true",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "f200c99b.36e458",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5003 lifetime total",
+        "func": "var newMsg = { payload: msg.payload[3] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 720,
+        "wires": [
+            [
+                "52810289.86499c"
+            ]
+        ]
+    },
+    {
+        "id": "98920e70.8e982",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Internal Temperature",
+        "topic": "solar/pv_internal_temp",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "834c75d4.39c228",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5007 internal temperature",
+        "func": "var newMsg = { payload: msg.payload[7]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 780,
+        "wires": [
+            [
+                "98920e70.8e982"
+            ]
+        ]
+    },
+    {
+        "id": "daa7b183.18e82",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Bank A Voltage",
+        "topic": "solar/pv_a_voltage",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "161ebaa0.d48555",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5010 bank a voltage",
+        "func": "var newMsg = { payload: msg.payload[10]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 840,
+        "wires": [
+            [
+                "daa7b183.18e82"
+            ]
+        ]
+    },
+    {
+        "id": "b3eb3efe.f0bc3",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Bank A Current",
+        "topic": "solar/pv_a_current",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "21f81d08.f99f52",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5011 bank a current",
+        "func": "var newMsg = { payload: msg.payload[11]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 900,
+        "wires": [
+            [
+                "b3eb3efe.f0bc3"
+            ]
+        ]
+    },
+    {
+        "id": "d5450c8e.d787e",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Bank B Voltage",
+        "topic": "solar/pv_b_voltage",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "83cddcef.5da02",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5012 bank a voltage",
+        "func": "var newMsg = { payload: msg.payload[12]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 960,
+        "wires": [
+            [
+                "d5450c8e.d787e"
+            ]
+        ]
+    },
+    {
+        "id": "3f5890d4.617f1",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Bank B Current",
+        "topic": "solar/pv_b_current",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "e41cc2b1.2f84d",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5013 bank b current",
+        "func": "var newMsg = { payload: msg.payload[13]/10 };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 1020,
+        "wires": [
+            [
+                "3f5890d4.617f1"
+            ]
+        ]
+    },
+    {
+        "id": "868a3db9.03c09",
+        "type": "modbus-response",
+        "z": "f662edaf.b0242",
+        "name": "",
+        "registerShowMax": "100",
+        "x": 210,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "37207ace.274076",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Output",
+        "topic": "solar/5029",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1350,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4b697aa6.7e7b04",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5029",
+        "func": "var newMsg = { payload: msg.payload[29] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 160,
+        "wires": [
+            [
+                "37207ace.274076"
+            ]
+        ]
+    },
+    {
+        "id": "472f9bba.aad064",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Output",
+        "topic": "solar/5030",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1350,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "447afd77.2f5ed4",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5030",
+        "func": "var newMsg = { payload: msg.payload[30] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 200,
+        "wires": [
+            [
+                "472f9bba.aad064"
+            ]
+        ]
+    },
+    {
+        "id": "9fb4493a.22a848",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Output",
+        "topic": "solar/5031",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1350,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3920b1c6.a3afde",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5031",
+        "func": "var newMsg = { payload: msg.payload[30] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 240,
+        "wires": [
+            [
+                "9fb4493a.22a848"
+            ]
+        ]
+    },
+    {
+        "id": "65265588.00d61c",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Output",
+        "topic": "solar/5032",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1350,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4dc0b9.95c7ff48",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5032",
+        "func": "var newMsg = { payload: msg.payload[31] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 280,
+        "wires": [
+            [
+                "65265588.00d61c"
+            ]
+        ]
+    },
+    {
+        "id": "822249cf.11ba38",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Output",
+        "topic": "solar/5033",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1350,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "514ebda6.f19cc4",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5033",
+        "func": "var newMsg = { payload: msg.payload[32] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 320,
+        "wires": [
+            [
+                "822249cf.11ba38"
+            ]
+        ]
+    },
+    {
+        "id": "7424a34f.1c585c",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Output",
+        "topic": "solar/5034",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1350,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "8be5c35d.93b87",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5034",
+        "func": "var newMsg = { payload: msg.payload[33] };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 360,
+        "wires": [
+            [
+                "7424a34f.1c585c"
+            ]
+        ]
+    },
+    {
+        "id": "434c05c7.df849c",
+        "type": "debug",
+        "z": "f662edaf.b0242",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 470,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "aa11bfd6.4f463",
+        "type": "mqtt out",
+        "z": "f662edaf.b0242",
+        "name": "PV Meter Output",
+        "topic": "solar/pv_meter_output",
+        "qos": "1",
+        "retain": "false",
+        "broker": "3244a68e.56981a",
+        "x": 1310,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "5e57df6e.b5cc1",
+        "type": "function",
+        "z": "f662edaf.b0242",
+        "name": "input 5082-5083 meter power?",
+        "func": "var newMsg = { payload: (msg.payload[82])+(-msg.payload[83] << 32) };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 1060,
+        "wires": [
+            [
+                "aa11bfd6.4f463"
+            ]
+        ]
+    },
+    {
+        "id": "3244a68e.56981a",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "HASS MQTT",
+        "broker": "192.168.0.5",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "d8f95e8e.bcebd",
+        "type": "modbus-client",
+        "z": "",
+        "name": "SunGrow",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": true,
+        "queueLogEnabled": false,
+        "tcpHost": "192.168.0.76",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 3000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": false
+    }
+]
